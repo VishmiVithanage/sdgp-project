@@ -1,0 +1,110 @@
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Herb Detector',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: HerbDetectorPage(),
+    );
+  }
+}
+
+class HerbDetectorPage extends StatefulWidget {
+  @override
+  _HerbDetectorPageState createState() => _HerbDetectorPageState();
+}
+
+class _HerbDetectorPageState extends State<HerbDetectorPage> {
+  final ImagePicker _picker = ImagePicker();
+  dynamic _image;
+  List<Herb> _herbs = [];
+
+  Future _getImage() async {
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+        _herbs = [];
+      });
+      _detectHerbs();
+    }
+  }
+
+  Future _detectHerbs() async {
+    final FirebaseVisionImage visionImage =
+        FirebaseVisionImage.fromFile(_image);
+    final ImageLabeler labeler = FirebaseVision.instance.imageLabeler();
+    final List<ImageLabel> labels = await labeler.processImage(visionImage);
+    List<Herb> herbs = [];
+    for (ImageLabel label in labels) {
+      if (label.text.toLowerCase().contains('herb')) {
+        herbs.add(Herb(name: label.text, confidence: label.confidence));
+      }
+    }
+    setState(() {
+      _herbs = herbs;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Herb Detector'),
+      ),
+      body: Center(
+        child: _image == null
+            ? Text('Select an image to detect herbs')
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.file(
+                    _image,
+                    height: 200,
+                  ),
+                  SizedBox(height: 16),
+                  _herbs.isEmpty
+                      ? Text('No herbs detected')
+                      : Column(
+                          children: [
+                            Text('Herbs detected:'),
+                            SizedBox(height: 8),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: _herbs.length,
+                              itemBuilder: (context, index) {
+                                Herb herb = _herbs[index];
+                                return ListTile(
+                                  title: Text('${herb.name}'),
+                                  subtitle: Text('Confidence: ${herb.confidence}'),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                ],
+              ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _getImage,
+        tooltip: 'Select image',
+        child: Icon(Icons.image),
+      ),
+    );
+  }
+}
+
+class Herb {
+  final String name;
+  final double confidence;
+
+  Herb({required this.name, required this.confidence});
+}
