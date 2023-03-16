@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">NatureRoots</string>
+    <string name="home">Home</string>
+    <string name="add_camera">Add Camera</string>
+    <string name="description_format">%s…</string>
+    <string name="hello_welcome">Hello, Welcome</string>
+    <string name="app_description">Try take a picture and be amazed</string>
+    <string name="about_fragment">About Fragment</string>
+    <string name="app_icon">App Icon</string>
+    <string name="today_news">Amazing photo: </string>
+    <string name="herbal_leaf">Herbal Leaf</string>
+    <string name="capstone_description">
+        In Indonesia no less than 30.000 species of plants. But of the many species,
+        most people do not know the benefits, especially for herbal plants.
+        So this project proposed to help people recognize the herbal plants instantly,
+        give information to people that don’t know about herbal plants.</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="plants_name">Jelly Grass (Cincau)</string>
+    <string name="description">Description</string>
+    <string name="add_photo">Take Photo</string>
+    <string name="analyze">Analyze Photo</string>
+    <string name="your_bookmark">Your Bookmark</string>
+    <string name="push_analyze">Push Analyze Button to be amazed</string>
+    <string name="bookmark_result">Bookmark Result</string>
+    <string name="msg_save_bookmark">Bookmarked the new journey</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="bookmark_desc">This is where you saved the journey</string>
+    <string name="prediction_format">Prediction: %f</string>
+    <string name="products">Products: </string>
+    <string name="empty_placeholder">Still waiting for your journey list</string>
+    <string name="msg_error">Something wrong, sorry</string>
+    <string name="msg_empty">Picture Not Found, sorry</string>
+    <string name="plant_photo">Plant Photo: </string>
+</resources>
