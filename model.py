@@ -196,20 +196,12 @@ image = img_to_array(image)
 image = np.reshape(image,[1,256,256,3])
 model.predict(image)
 
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(learning_rate=0.001),
-              metrics=['accuracy'])
-
 
 # predicting images
 image = load_img('/content/drive/My Drive/dataset/PomegranateTest.jpg', target_size=(256, 256))
 image = img_to_array(image)
 image = np.reshape(image,[1,256,256,3])
 model.predict(image)
-
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(learning_rate=0.001),
-              metrics=['accuracy'])
 
 
 # predicting images
@@ -218,10 +210,6 @@ image = img_to_array(image)
 image = np.reshape(image,[1,256,256,3])
 model.predict(image)
 
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(learning_rate=0.001),
-              metrics=['accuracy'])
-
 
 # predicting images
 image = load_img('/content/drive/My Drive/dataset/Database/Pomegranate/PG-S-003.jpg', target_size=(256, 256))
@@ -229,20 +217,12 @@ image = img_to_array(image)
 image = np.reshape(image,[1,256,256,3])
 model.predict(image)
 
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(learning_rate=0.001),
-              metrics=['accuracy'])
-
 
 # predicting images
 image = load_img('/content/drive/My Drive/dataset/Database/Pomegranate/PG-S-004.jpg', target_size=(256, 256))
 image = img_to_array(image)
 image = np.reshape(image,[1,256,256,3])
 model.predict(image)
-
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(learning_rate=0.001),
-              metrics=['accuracy'])
 
 
 # predicting images
@@ -259,21 +239,6 @@ predicted_class_index = np.argmax(output_probabilities)
 predicted_class_name = class_names[predicted_class_index]
 # Print the predicted class name
 print(predicted_class_name)
-
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(learning_rate=0.001),
-              metrics=['accuracy'])
-
-
-# predicting images
-image = load_img('/content/drive/My Drive/dataset/Database/Mint/M-S-012.jpg', target_size=(256, 256))
-image = img_to_array(image)
-image = np.reshape(image,[1,256,256,3])
-model.predict(image)
-
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(learning_rate=0.001),
-              metrics=['accuracy'])
 
 
 # predicting images
