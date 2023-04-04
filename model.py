@@ -56,7 +56,7 @@ for image_class in os.listdir(dataset_path):
 import numpy as np
 from matplotlib import pyplot as plt
 
-data = tf.keras.utils.image_dataset_from_directory('/content/drive/My Drive/dataset/Database')
+data = tf.keras.utils.image_dataset_from_directory('/content/drive/My Drive/dataset/Database/')
 
 data_iterator = data.as_numpy_iterator()
 
@@ -178,80 +178,3 @@ print (f'Precision:{pre.result().numpy()}, Recall:{re.result().numpy()}, Accurac
 from tensorflow.keras.models import load_model
 
 model.save(os.path.join('/content/drive/My Drive','model.h5'))
-
-"""Test"""
-
-from keras.utils import load_img, img_to_array
-import numpy as np
-from keras.optimizers import RMSprop
-
-model.compile(loss='categorical_crossentropy',
-              optimizer=RMSprop(learning_rate=0.001),
-              metrics=['accuracy'])
-
-
-# predicting images
-image = load_img('/content/drive/My Drive/dataset/Database/Pomegranate/PG-S-001.jpg', target_size=(256, 256))
-image = img_to_array(image)
-image = np.reshape(image,[1,256,256,3])
-model.predict(image)
-
-
-# predicting images
-image = load_img('/content/drive/My Drive/dataset/PomegranateTest.jpg', target_size=(256, 256))
-image = img_to_array(image)
-image = np.reshape(image,[1,256,256,3])
-model.predict(image)
-
-
-# predicting images
-image = load_img('/content/drive/My Drive/dataset/Database/Pomegranate/PG-S-002.jpg', target_size=(256, 256))
-image = img_to_array(image)
-image = np.reshape(image,[1,256,256,3])
-model.predict(image)
-
-
-# predicting images
-image = load_img('/content/drive/My Drive/dataset/Database/Pomegranate/PG-S-003.jpg', target_size=(256, 256))
-image = img_to_array(image)
-image = np.reshape(image,[1,256,256,3])
-model.predict(image)
-
-
-# predicting images
-image = load_img('/content/drive/My Drive/dataset/Database/Pomegranate/PG-S-004.jpg', target_size=(256, 256))
-image = img_to_array(image)
-image = np.reshape(image,[1,256,256,3])
-model.predict(image)
-
-
-# predicting images
-image = load_img('/content/drive/My Drive/dataset/Database/Pomegranate/PG-S-006.jpg', target_size=(256, 256))
-image = img_to_array(image)
-image = np.reshape(image,[1,256,256,3])
-model.predict(image)
-
-# Get the predicted output probabilities for the input image
-output_probabilities = model.predict(image)
-# Get the index of the maximum value in the output array
-predicted_class_index = np.argmax(output_probabilities)
-# Get the name of the predicted class
-predicted_class_name = class_names[predicted_class_index]
-# Print the predicted class name
-print(predicted_class_name)
-
-
-# predicting images
-image = load_img('/content/drive/My Drive/dataset/Database/Lemon/0010_0011.jpg', target_size=(256, 256))
-image = img_to_array(image)
-image = np.reshape(image,[1,256,256,3])
-model.predict(image)
-
-# Get the predicted output probabilities for the input image
-output_probabilities = model.predict(image)
-# Get the index of the maximum value in the output array
-predicted_class_index = np.argmax(output_probabilities)
-# Get the name of the predicted class
-predicted_class_name = class_names[predicted_class_index]
-# Print the predicted class name
-print(predicted_class_name)
