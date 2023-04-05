@@ -2,9 +2,12 @@ package com.mfahmi.mymedicineplantidentification.ui.camera
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.viewbinding.library.activity.viewBinding
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,7 +32,6 @@ import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.model.Model
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 
 @SuppressLint("NewApi")
 class CameraActivity : AppCompatActivity() {
@@ -64,15 +66,19 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // click listerner for the gallery button
+        binding.btnAddPhoto.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, GALLERY_REQ_CODE)
+        }
+
         binding.btnCloseCameraAct.setOnClickListener { finish() }
 
-        checkPermissionCam()
-        binding.btnAddPhoto.setOnClickListener {
-            takePicture.launch(null)
-        }
         binding.btnAnalyzePhoto.setOnClickListener {
             setResultAnalyze()
         }
+
         binding.btnSaveBookmark.setOnClickListener {
             viewModel.insertPlantData(
                 PlantDomain(
@@ -90,31 +96,30 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
+    // handle the result of opening the gallery
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GALLERY_REQ_CODE && resultCode == RESULT_OK && data != null) {
+            val selectedImage = data.data
+            try {
+                val inputStream = contentResolver.openInputStream(selectedImage!!)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                binding.imgCameraCapture.setImageBitmap(bitmap)
+                bitmapResult = bitmap
+                binding.btnAnalyzePhoto.setVisibility(true)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQ_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            binding.btnAddPhoto.isEnabled = true
-        }
-    }
 
-    private fun checkPermissionCam() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA),
-                PERMISSION_REQ_CODE
-            )
-        } else {
-            binding.btnAddPhoto.isEnabled = true
-        }
     }
 
     private fun populateProducts() {
@@ -178,5 +183,6 @@ class CameraActivity : AppCompatActivity() {
 
     companion object {
         const val PERMISSION_REQ_CODE = 111
+        const val GALLERY_REQ_CODE = 222
     }
 }
