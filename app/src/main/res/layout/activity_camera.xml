@@ -113,6 +113,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin">
 
+                <!--Add Image-->
                 <ImageButton
                     android:id="@+id/btn_close_camera_act"
                     android:layout_width="38dp"

@@ -30,6 +30,7 @@ import org.tensorflow.lite.support.model.Model
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+
 @SuppressLint("NewApi")
 class CameraActivity : AppCompatActivity() {
     private val binding: ActivityCameraBinding by viewBinding()
