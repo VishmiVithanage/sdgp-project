@@ -159,6 +159,8 @@ plt.show()
 from tensorflow.keras.metrics import Precision, Recall, BinaryAccuracy
 from keras.utils import to_categorical
 
+model.evaluate(test)
+
 pre = Precision()
 re = Recall()
 acc = BinaryAccuracy()
